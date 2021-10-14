@@ -5,10 +5,10 @@
 #     Odoo 10, 11, 12, 13: novobi/odoo-box
 #     Odoo 14            : novobi/odoo14-box
 #     Odoo 15            : novobi/odoo15-box
-
+#
 # Fixed IP for VM:
 #     config.vm.network "private_network", ip: "172.28.128.3"   # Any private IP you want
-
+#
 # Forwarded Port:
 #     config.vm.network "forwarded_port", guest: 80, host: 8080
 # This will allow accessing port 80 on the guest via port 8080 on the host.
