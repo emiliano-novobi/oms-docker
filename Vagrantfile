@@ -23,8 +23,8 @@ Vagrant.configure("2") do |config|
 
     # workaround for the freezing issue with newer versions of Virtual Box and Vagrant
     config.vm.provider "virtualbox" do |vb|
-        vb.memory: 2048
-        vb.cpus: 2
+        vb.memory = 2048
+        vb.cpus = 2
         # If you use Windows, use the line below.
         vb.customize [ "modifyvm", :id, "--uartmode1", "file", File::NULL ]
         # If you use Linux, please comment the line above and uncomment the line below.
