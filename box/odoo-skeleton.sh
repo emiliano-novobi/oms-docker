@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# This note is an old version. Please do not touch it.
+
 # This is a note of how to create vagrant box for odoo,
 # not an install script that will run at once.
 # Some of these commands below are interactive
