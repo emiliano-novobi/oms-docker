@@ -1,5 +1,3 @@
 .vagrant
 .idea
-customized_addons
-odoo.conf
 *.log
