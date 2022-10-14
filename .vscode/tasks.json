@@ -4,7 +4,7 @@
         {
             "type": "shell",
             "label": "debug-odoo",
-            "command": "docker-compose kill odoo; docker-compose -f docker-compose.debug.yml up -d; sleep 2",
+            "command": "docker-compose kill odoo; docker-compose -f docker-compose.yml up -d; sleep 2",
             "presentation": {
                 "reveal": "always",
                 "panel": "dedicated"
