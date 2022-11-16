@@ -6,8 +6,8 @@ services:
     #   image: novobidevops/odoo:[odoo_version]
     # Available [odoo_version]: 10, 11, 12, 13, 14, 15
 
-    image: novobidevops/odoo:16
-    # build: ./box
+    # image: novobidevops/odoo:16
+    build: ./box
 
     # If developer want to use their own Docker environment, Do the following actions : 
     #
@@ -31,16 +31,7 @@ services:
       START_ODOO: "/opt/odoo/odoo/odoo-bin -c /opt/odoo/odoo.conf"
       ODOO_PARAM: ""
     depends_on:
-      - nginx
       - postgres
-    restart: unless-stopped
-    tty: true
-  nginx:
-    image: nginx
-    ports:
-      - "80:80"
-    volumes:
-      - ./box/odoo_nginx.conf:/etc/nginx/conf.d/default.conf
     restart: unless-stopped
     tty: true
   postgres:
