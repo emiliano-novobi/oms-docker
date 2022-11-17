@@ -2,45 +2,53 @@ version: "3.9"
 
 services:
   odoo:
-    # Chage Odoo version image:
-    #   image: novobidevops/odoo:[odoo_version]
-    # Available [odoo_version]: 10, 11, 12, 13, 14, 15
-
     # image: novobidevops/odoo:16
     build: ./box
-
-    # If developer want to use their own Docker environment, Do the following actions : 
-    #
-    # + comment line #9 
-    # + uncomment line #10. 
-    # + Make adjustment on file ./box/Dockerfile
-    #
-    # After docker-compose up, a new docker image will be built 
-    # with the new adjustments on the file ./box/Dockerfile
-
     ports:
       - "8069:8069"
-      - "8888:8888"
     volumes:
       - ./:/opt/odoo
       - odoo_data:/home/odoo/.local/share/Odoo
-    command: bash -c "$${PYTHON_PATH} $${DEBUG_ODOO} $${START_ODOO} $${ODOO_PARAM} && tail -f /dev/null"
+    command: bash -c "$${PYTHON_PATH} $${START_ODOO} $${ODOO_PARAM} && tail -f /dev/null"
     environment:
       PYTHON_PATH: "/usr/bin/python3"
-      DEBUG_ODOO: "-m debugpy --listen 0.0.0.0:8888"
       START_ODOO: "/opt/odoo/odoo/odoo-bin -c /opt/odoo/odoo.conf"
       ODOO_PARAM: ""
     depends_on:
-      - postgres
-    restart: unless-stopped
+      - postgres_odoo
     tty: true
-  postgres:
+  postgres_odoo:
     image: postgres:13
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-    restart: unless-stopped
+      - postgres_odoo_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo
+    tty: true
+  oms:
+    build: ./box
+    ports:
+      - "8070:8069"
+    volumes:
+      - ./:/opt/odoo
+      - oms_data:/home/odoo/.local/share/Odoo
+    command: bash -c "$${PYTHON_PATH} $${START_ODOO} $${ODOO_PARAM} && tail -f /dev/null"
+    environment:
+      PYTHON_PATH: "/usr/bin/python3"
+      START_ODOO: "/opt/odoo/odoo/odoo-bin -c /opt/odoo/oms.conf"
+      ODOO_PARAM: ""
+    depends_on:
+      - postgres_oms
+    tty: true
+  postgres_oms:
+    image: postgres:13
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_oms_data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: odoo
@@ -49,4 +57,6 @@ services:
 
 volumes:
   odoo_data:
-  postgres_data:
+  postgres_odoo_data:
+  oms_data:
+  postgres_oms_data:
