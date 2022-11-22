@@ -54,7 +54,10 @@ services:
       POSTGRES_USER: odoo
       POSTGRES_PASSWORD: odoo
     tty: true
-
+  s3:
+    image: scireum/s3-ninja
+    ports:
+      - 9444:9000
 volumes:
   odoo_data:
   postgres_odoo_data:
