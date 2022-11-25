@@ -15,14 +15,14 @@ services:
       START_ODOO: "/opt/odoo/odoo/odoo-bin -c /opt/odoo/odoo.conf"
       ODOO_PARAM: ""
     depends_on:
-      - postgres_odoo
+      - odoo-postgres
     tty: true
-  postgres_odoo:
+  odoo-postgres:
     image: postgres:13
     ports:
       - "5432:5432"
     volumes:
-      - postgres_odoo_data:/var/lib/postgresql/data
+      - odoo_postgres_data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: odoo
@@ -41,14 +41,14 @@ services:
       START_ODOO: "/opt/odoo/odoo/odoo-bin -c /opt/odoo/oms.conf"
       ODOO_PARAM: ""
     depends_on:
-      - postgres_oms
+      - oms-postgres
     tty: true
-  postgres_oms:
+  oms-postgres:
     image: postgres:13
     ports:
       - "5433:5432"
     volumes:
-      - postgres_oms_data:/var/lib/postgresql/data
+      - oms_postgres_data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: odoo
@@ -68,8 +68,9 @@ services:
     volumes:
       - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
+
 volumes:
   odoo_data:
-  postgres_odoo_data:
+  odoo_postgres_data:
   oms_data:
-  postgres_oms_data:
+  oms_postgres_data:
