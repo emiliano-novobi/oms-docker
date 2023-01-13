@@ -5,7 +5,7 @@ services:
     # image: novobidevops/odoo:16
     build: ./box
     ports:
-      - "8068:8069"
+      - "8069:8069"
     volumes:
       - ./:/opt/odoo
       - odoo1_data:/home/odoo/.local/share/Odoo
@@ -20,7 +20,7 @@ services:
   odoo1-postgres:
     image: postgres:13
     ports:
-      - "5431:5432"
+      - "5432:5432"
     volumes:
       - odoo1_postgres_data:/var/lib/postgresql/data
     environment:
@@ -32,7 +32,7 @@ services:
     # image: novobidevops/odoo:16
     build: ./box
     ports:
-      - "8069:8069"
+      - "8070:8069"
     volumes:
       - ./:/opt/odoo
       - odoo2_data:/home/odoo/.local/share/Odoo
@@ -47,7 +47,7 @@ services:
   odoo2-postgres:
     image: postgres:13
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - odoo2_postgres_data:/var/lib/postgresql/data
     environment:
@@ -58,7 +58,7 @@ services:
   oms:
     build: ./box
     ports:
-      - "8070:8069"
+      - "8068:8069"
     volumes:
       - ./:/opt/odoo
       - oms_data:/home/odoo/.local/share/Odoo
@@ -73,7 +73,7 @@ services:
   oms-postgres:
     image: postgres:13
     ports:
-      - "5433:5432"
+      - "5431:5432"
     volumes:
       - oms_postgres_data:/var/lib/postgresql/data
     environment:
