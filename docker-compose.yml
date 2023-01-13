@@ -1,28 +1,55 @@
 version: "3.9"
 
 services:
-  odoo:
+  odoo1:
+    # image: novobidevops/odoo:16
+    build: ./box
+    ports:
+      - "8068:8069"
+    volumes:
+      - ./:/opt/odoo
+      - odoo1_data:/home/odoo/.local/share/Odoo
+    command: bash -c "$${PYTHON_PATH} $${START_ODOO} $${ODOO_PARAM} && tail -f /dev/null"
+    environment:
+      PYTHON_PATH: "/usr/bin/python3"
+      START_ODOO: "/opt/odoo/odoo/odoo-bin -c /opt/odoo/odoo1.conf"
+      ODOO_PARAM: ""
+    depends_on:
+      - odoo1-postgres
+    tty: true
+  odoo1-postgres:
+    image: postgres:13
+    ports:
+      - "5431:5432"
+    volumes:
+      - odoo1_postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo
+    tty: true
+  odoo2:
     # image: novobidevops/odoo:16
     build: ./box
     ports:
       - "8069:8069"
     volumes:
       - ./:/opt/odoo
-      - odoo_data:/home/odoo/.local/share/Odoo
+      - odoo2_data:/home/odoo/.local/share/Odoo
     command: bash -c "$${PYTHON_PATH} $${START_ODOO} $${ODOO_PARAM} && tail -f /dev/null"
     environment:
       PYTHON_PATH: "/usr/bin/python3"
-      START_ODOO: "/opt/odoo/odoo/odoo-bin -c /opt/odoo/odoo.conf"
+      START_ODOO: "/opt/odoo/odoo/odoo-bin -c /opt/odoo/odoo2.conf"
       ODOO_PARAM: ""
     depends_on:
-      - odoo-postgres
+      - odoo2-postgres
     tty: true
-  odoo-postgres:
+  odoo2-postgres:
     image: postgres:13
     ports:
       - "5432:5432"
     volumes:
-      - odoo_postgres_data:/var/lib/postgresql/data
+      - odoo2_postgres_data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: odoo
@@ -70,7 +97,9 @@ services:
       - "/var/run/docker.sock:/var/run/docker.sock"
 
 volumes:
-  odoo_data:
-  odoo_postgres_data:
+  odoo1_data:
+  odoo1_postgres_data:
+  odoo2_data:
+  odoo2_postgres_data:
   oms_data:
   oms_postgres_data:
