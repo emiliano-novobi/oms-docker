@@ -1,7 +1,7 @@
 export PGPASSWORD=odoo
-export ODOO_CONTAINER=oms-docker-odoo-1
-export DB_CONTAINER=oms-docker-odoo-postgres-1
-export ODOO_BIN="/opt/odoo/odoo/odoo-bin -c /opt/odoo/odoo.conf"
+export ODOO_CONTAINER=oms-docker-odoo1-1
+export DB_CONTAINER=oms-docker-odoo1-postgres-1
+export ODOO_BIN="/opt/odoo/odoo/odoo-bin -c /opt/odoo/odoo1.conf"
 export CUSTOM_ADDONS_DIRECTORY=/opt/odoo/customized_addons/oms_agent_addons
 export TEST_DB=oms_agent_test_db
 
